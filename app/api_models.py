@@ -15,7 +15,7 @@ class UserResponse(UserBase):
     created_at: datetime
 
     class Config:
-        from_attributes = True
+        from_attributes = True # Allows Pydantic to maintain compatibility with ORM objects
 
 # --- Post Schemas ---
 class PostBase(BaseModel):
