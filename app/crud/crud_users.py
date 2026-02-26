@@ -1,18 +1,50 @@
 from sqlalchemy.orm import Session
-from .. import models, api_models
+from ..db_models import User
+from ..api_models import UserCreate, UserBase, UserResponse
 
-# Function to find a user by ID
-def get_user(db: Session, user_id: int):
-    return db.query(models.User).filter(models.User.id == user_id).first()
+# Get a single user by their ID
+def get_user_by_id(db: Session, user_id: int):
+    return db.query(User).filter(User.id == user_id).first()
 
-# Function to create a new user record
-def create_user(db: Session, user: api_models.UserCreate):
-    db_user = models.User(
+# Get a single user by their email (useful for unique checks)
+def get_user_by_email(db: Session, email: str):
+    return db.query(User).filter(User.email == email).first()
+
+# Get a list of users with optional limit and offset (Pagination)
+def get_users(db: Session, skip: int = 0, limit: int = 100):
+    # The limit tells the database: What is the maximum number of rows I want to receive right now.
+    # The skip (often called offset in SQL) tells the database: How many rows should I jump over before I start counting?
+    return db.query(User).offset(skip).limit(limit).all()
+
+# Create a new user in the database
+def create_user(db: Session, user: UserCreate):
+    # Map Pydantic data to SQLAlchemy Model
+    db_user = User(
         name=user.name,
         email=user.email,
-        password=user.password
+        password=user.password  # Note: In production, passwords will be hashed..
     )
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
     return db_user
+
+# Update an existing user's information
+def update_user(db: Session, user_id: int, user_data: UserCreate):
+    db_user = db.query(User).filter(User.id == user_id).first()
+    if db_user:
+        db_user.name = user_data.name
+        db_user.email = user_data.email
+        db_user.password = user_data.password
+        db.commit()
+        db.refresh(db_user)
+    return db_user
+
+# Delete a user from the database
+def delete_user(db: Session, user_id: int):
+    db_user = db.query(User).filter(User.id == user_id).first()
+    if db_user:
+        db.delete(db_user)
+        db.commit()
+        return True
+    return False
