@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from ..db import get_db
-from ..models import Post
+from ..db_models import Post
 from ..api_models import PostCreate, PostResponse
 
 router = APIRouter()

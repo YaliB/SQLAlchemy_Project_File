@@ -4,7 +4,7 @@ from typing import List
 
 # Internal imports using relative paths
 from ..db import SessionLocal, get_db
-from ..models import User
+from ..db_models import User
 from ..api_models import UserCreate, UserResponse
 
 router = APIRouter()

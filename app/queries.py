@@ -1,7 +1,7 @@
 from sqlalchemy import select, func
 
 from db import Session
-from models import User
+from app.db_models import User
 
 
 def select_user(session: Session):
@@ -17,7 +17,7 @@ def select_user(session: Session):
 from fastapi import APIRouter, Depends
 from sqlalchemy import func
 from db import get_db
-from models import models
+from app.db_models import models
 
 router = APIRouter()
 
