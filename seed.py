@@ -1,31 +1,33 @@
 from app.db import db_session, engine, Base
 from app import db_models
+from app.utils.auth_utils import hash_password # Import our hashing utility
 
 def seed_data():
     """
-    Main function to seed the database with initial data.
-    Uses the db_session context manager to ensure safe transactions.
+    Seeds the database with initial data, now including hashed passwords.
     """
     print("Starting database seed process...")
     
-    # Ensure all tables exist (works for both SQLite and PostgreSQL)
     Base.metadata.create_all(bind=engine)
 
     try:
         with db_session() as db:
-            # 1. Seed Users
-            # Only seed if the table is empty to avoid Unique Constraint errors
+            # 1. Seed Users with Hashed Passwords
             if db.query(db_models.User).count() == 0:
-                print("Seeding Users...")
+                print("Seeding Users with hashed passwords...")
+                
+                # We use the same password for all test users for simplicity
+                test_password = hash_password("password123")
+                
                 users = [
-                    db_models.User(name="Alice Johnson", email="alice@example.com", password="password123"),
-                    db_models.User(name="Bob Smith", email="bob@example.com", password="password123"),
-                    db_models.User(name="Charlie Brown", email="charlie@example.com", password="password123"),
-                    db_models.User(name="David Wilson", email="david@example.com", password="password123"),
-                    db_models.User(name="Eve Adams", email="eve@example.com", password="password123")
+                    db_models.User(name="Alice Johnson", email="alice@example.com", username="alice", password=test_password),
+                    db_models.User(name="Bob Smith", email="bob@example.com", username="bob", password=test_password),
+                    db_models.User(name="Charlie Brown", email="charlie@example.com", username="charlie", password=test_password),
+                    db_models.User(name="David Wilson", email="david@example.com", username="david", password=test_password),
+                    db_models.User(name="Eve Adams", email="eve@example.com", username="eve", password=test_password)
                 ]
                 db.add_all(users)
-                db.flush() # Push changes to get IDs for foreign key relations
+                db.flush() 
 
             # 2. Seed Groups
             if db.query(db_models.Group).count() == 0:
@@ -73,11 +75,10 @@ def seed_data():
                 ]
                 db.add_all(memberships)
 
-        print("Database Seeded Successfully! All changes committed.")
+        print("Database Seeded Successfully! All passwords are now hashed.")
 
     except Exception as e:
         print(f"An error occurred during seeding: {e}")
-        # The db_session context manager will automatically handle rollback
 
 if __name__ == "__main__":
     seed_data()

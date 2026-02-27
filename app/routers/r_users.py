@@ -14,12 +14,18 @@ router = APIRouter()
 # Create a new user
 @router.post("/", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    # Check if user already exists by email
-    existing_user = crud_users.get_user_by_email(db, email=user.email)
-    if existing_user:
+    # 1. Check if user already exists by email
+    existing_email = crud_users.get_user_by_email(db, email=user.email)
+    if existing_email:
         raise HTTPException(status_code=400, detail="Email already registered")
     
-    # Create new user (Dont worry Dor, In production, I would hash the password here!)
+    # 2. Check if username is already taken (Important for Login!)
+    existing_username = crud_users.get_user_by_username(db, username=user.username)
+    if existing_username:
+        raise HTTPException(status_code=400, detail="Username already taken")
+    
+    # 3. Create new user 
+    # Password hashing is now handled at the CRUD level for security.
     return crud_users.create_user(db=db, user=user)
 
 

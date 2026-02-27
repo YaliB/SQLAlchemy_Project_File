@@ -5,6 +5,7 @@ from typing import Optional, List
 # --- User Schemas ---
 class UserBase(BaseModel):
     name: str
+    username: str
     email: EmailStr
 
 class UserCreate(UserBase):
