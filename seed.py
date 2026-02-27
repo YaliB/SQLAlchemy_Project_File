@@ -31,9 +31,9 @@ def seed_data():
             if db.query(db_models.Group).count() == 0:
                 print("Seeding Groups...")
                 groups = [
-                    db_models.Group(name="Python Developers", description="A group for Python enthusiasts"),
-                    db_models.Group(name="FastAPI Fans", description="Discussion about FastAPI framework"),
-                    db_models.Group(name="React Masters", description="Frontend development hub")
+                    db_models.Group(name="Python Developers"),
+                    db_models.Group(name="FastAPI Fans"),
+                    db_models.Group(name="React Masters")
                 ]
                 db.add_all(groups)
                 db.flush()
@@ -68,8 +68,8 @@ def seed_data():
                 print("Seeding Group Memberships...")
                 all_groups = db.query(db_models.Group).all()
                 memberships = [
-                    db_models.GroupMembership(user_id=all_users[0].id, group_id=all_groups[0].id, role="admin"),
-                    db_models.GroupMembership(user_id=all_users[1].id, group_id=all_groups[0].id, role="member")
+                    db_models.GroupMembership(user_id=all_users[0].id, group_id=all_groups[0].id),
+                    db_models.GroupMembership(user_id=all_users[1].id, group_id=all_groups[0].id)
                 ]
                 db.add_all(memberships)
 
