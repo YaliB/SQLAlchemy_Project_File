@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers import (r_comments, r_friendships, r_group_memberships, r_groups, r_likes, r_messages, r_posts, r_users)
+from app.routers import (r_comments, r_friendships, r_group_memberships, r_groups, r_likes, r_messages, r_posts, r_users, r_analytics)
 from .db import Base, engine
 
 
@@ -18,6 +18,7 @@ app.include_router(r_friendships.router, prefix="/friendships", tags=["friendshi
 app.include_router(r_messages.router, prefix="/messages", tags=["messages"])
 app.include_router(r_groups.router, prefix="/groups", tags=["groups"])
 app.include_router(r_group_memberships.router, prefix="/group_memberships", tags=["group_memberships"])
+app.include_router(r_analytics.router, prefix="/analytics", tags=["analytics"])
 
 # Root Routhe
 @app.get("/")
