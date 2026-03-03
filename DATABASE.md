@@ -30,16 +30,13 @@ The system uses **SQLAlchemy ORM** to manage relationships. All relationships ar
     * Receiver: `messages.receiver_id`.
 
 
-## 📑 Table Definitions
-<details>
-<summary>Click here to see the table[DB] architecture</summary>
+## 🛠 Cascading Strategy
+To prevent **Orphaned Records** (data pointing to a non-existent user), the following logic is applied:
 
-**Users Table** (users)
-Main table for account information and authentication.
-Column | Type | Constraints
-`id` | Integer | Primary Key, Index
-`username` | String(50) | Unique, Indexed, Not Null
-`email` | String(100) | Unique, Indexed, Not Null
-`password` | String(255) | Not Null (Hashed)
-`created_at` | DateTime | Default: `now()`
-</details>
+* **Database Level:** ForeignKey(..., ondelete="CASCADE")
+   * This ensures that if a row is deleted via a raw SQL query, the database engine handles the cleanup.
+* **Application Level:** relationship(..., cascade="all, delete-orphan")
+   * This ensures that SQLAlchemy cleans up related objects in memory and in the session during a deletion process.
+
+**Note:** If a user is deleted, their profile, posts, comments, likes, group memberships, and messages are automatically purged from the system.
+
