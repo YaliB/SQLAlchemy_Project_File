@@ -2,6 +2,9 @@
 A FastAPI-based social media backend with profile management, posts, analytics, and more.
 
 ## 🚀 How to Run the Project
+<details>
+<summary>Click to see how to Run the Project</summary>
+
 1. Clone the repository
 ```Bash
 git clone https://github.com/YaliB/SQLAlchemy_Project_File
@@ -29,10 +32,13 @@ uvicorn app.main:app --reload
 ```
 The API will be available at http://127.0.0.1:8000.
 You can access the interactive documentation (Swagger UI) at http://127.0.0.1:8000/docs.
+</details>
 
 ## 🗄 Database Connection Instructions
 The project uses SQLAlchemy as an ORM, allowing flexibility between different database engines.
-
+<details>
+<summary>Click to see advanced database configuration</summary>
+ 
 1. **Configuration:** Connection details are managed in `app/db.py` and can be overridden via an `.env` file.
 
 2. **Default Setup:** By default, the project is configured to use SQLite for easy development. It will automatically create a file named sql_app.db in the root directory upon the first run.
@@ -44,6 +50,7 @@ The project uses SQLAlchemy as an ORM, allowing flexibility between different da
 * Add your connection string: `DATABASE_URL=postgresql://user:password@localhost/dbname`.
 
 4. **Auto-Migrations:** The project uses `Base.metadata.create_all(bind=engine)` in `main.py` to ensure all tables exist on startup.
+</details>
 
 ## 🛠 Menu Structure (Endpoints)
 The API is organized into logical routers for easy navigation:
