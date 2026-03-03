@@ -4,8 +4,8 @@ A FastAPI-based social media backend with profile management, posts, analytics, 
 ## 🚀 How to Run the Project
 1. Clone the repository
 ```Bash
-git clone <your-repo-url>
-cd social-media-api
+git clone https://github.com/YaliB/SQLAlchemy_Project_File
+cd SQLAlchemy_Project_File
 ```
 2. Set up a Virtual Environment
 ```Bash
@@ -37,7 +37,7 @@ The project uses SQLAlchemy as an ORM, allowing flexibility between different da
 
 2. **Default Setup:** By default, the project is configured to use SQLite for easy development. It will automatically create a file named sql_app.db in the root directory upon the first run.
 
-3. **Production (PostgreSQL/MySQL):**
+3. **Production (PostgreSQL):**
 
 * Create a `.env` file in the root folder.
 
@@ -48,23 +48,21 @@ The project uses SQLAlchemy as an ORM, allowing flexibility between different da
 ## 🛠 Menu Structure (Endpoints)
 The API is organized into logical routers for easy navigation:
 
-* **Auth:** `/auth/login` - JWT Token generation.
-
 * **Users:** `/users` - Registration, profile updates, and image uploads.
 
 * **Social:** `/posts` - Create/Read/Update/Delete posts.
 
-* `/comments` - Manage comments on posts.
+  * `/comments` - Manage comments on posts.
 
-* `/likes` - Like/Unlike functionality.
+  * `/likes` - Like/Unlike functionality.
 
-* `/friendships` - Connect with other users.
+  * `/friendships` - Connect with other users.
 
 * **Messaging & Groups:**
 
-* `/messages` - Private chat history.
+  * `/messages` - Private chat history.
 
-* `/groups` & `/group_memberships` - Community management.
+  * `/groups` & `/group_memberships` - Community management.
 
 * **Analytics:** `/analytics` - Business insights and statistics.
 
@@ -72,25 +70,22 @@ The API is organized into logical routers for easy navigation:
 The project implements 5 key business questions to provide insights into user behavior and platform health:
 
 1. **Top 5 Most Liked Posts:** Identify viral content by calculating the sum of likes per post using complex JOINS.
-* Endpoint: `GET /analytics/top-posts`
-
+  * Endpoint: `GET /analytics/top-posts`
 2. **Most Active Users:** Tracks which users are contributing the most content (Posts) to the platform.
-* Endpoint: `GET /analytics/active-users`
-
+  * Endpoint: `GET /analytics/active-users`
 3. **Group Popularity:** Ranks groups based on their membership count to see which communities are growing fastest.
-* Endpoint: `GET /analytics/popular-groups`
-
+  * Endpoint: `GET /analytics/popular-groups`
 4. **Silent Users:** Identifies users who have registered but haven't posted yet (useful for marketing re-engagement).
-* Endpoint: `GET /analytics/silent-users`
-
+  * Endpoint: `GET /analytics/silent-users`
 5. **User Profile Completeness:** (Example) Provides statistics on how many users have uploaded profile pictures or updated their bios.
-* Endpoint: `GET /analytics/profile-stats`
+  * Endpoint: `GET /analytics/profile-stats`
 
-📂 File Structure
-Plaintext
+## 📂 File Structure
+```
 app/
 ├── main.py          # Entry point
 ├── db_models.py     # SQLAlchemy models
 ├── api_models.py    # Pydantic schemas
 ├── routers/         # Route handlers
 └── crud/            # Database logic
+```
