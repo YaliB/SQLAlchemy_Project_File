@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // Correct relative paths based on your folder structure
 import api from "../../api";           
 import Login from "../../components/Login"; 
-import Sidebar from "../../components/Sidebar"; 
+// import Sidebar from "../../components/Sidebar"; 
 
 // Sub-component for Sidebar Items
 const NavItem = ({ label, icon }) => (
@@ -92,7 +92,7 @@ function TopPostsPage() {
               topPosts.map((post) => (
                 <div key={post.id} className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
                   <div className="p-4 flex items-center space-x-3 border-b border-gray-50">
-                     <div className="w-10 h-10 bg-gradient-to-tr from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                     <div className="w-10 h-10 bg-linear-to-tr from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-bold">
                         {post.user_name?.charAt(0) || 'U'}
                      </div>
                      <div>
