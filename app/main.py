@@ -1,10 +1,16 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+import os
 from app.routers import (r_comments, r_friendships, r_group_memberships, r_groups, r_likes, r_messages, r_posts, r_users,
                           r_analytics,
                           r_auth)
 from .db import Base, engine
 
+
+# Create static/uploads directory if it doesn't exist
+if not os.path.exists("static/uploads"):
+    os.makedirs("static/uploads")
 
 # Create tables on startup
 Base.metadata.create_all(bind=engine)
@@ -34,6 +40,8 @@ app.include_router(r_group_memberships.router, prefix="/group_memberships", tags
 app.include_router(r_analytics.router, prefix="/analytics", tags=["analytics"])
 app.include_router(r_auth.router, prefix="/auth", tags=["auth"])
 
+# Mount static files
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Root Routhe
 @app.get("/")

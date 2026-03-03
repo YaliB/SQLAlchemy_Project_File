@@ -1,1 +1,7 @@
 Generic single-database configuration.
+
+How to Run Migrations:
+1. Create a new migration file:
+alembic revision --autogenerate -m "migration name"
+2. Run the migrations:
+alembic upgrade head

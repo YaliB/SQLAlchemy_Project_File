@@ -19,7 +19,7 @@ def get_active_users():
     Get users who published the most posts.
     """
     results = queries.get_most_active_users()
-    return [{"user": r[0], "posts": r[1]} for r in results]
+    return [{"username": r[0], "posts": r[1]} for r in results]
 
 @router.get("/popular-groups", response_model=List[Dict[str, Any]])
 def get_popular_groups():
@@ -35,6 +35,7 @@ def get_silent_users():
     List names of users who have not created any post yet.
     """
     results = queries.get_silent_users()
+    # results is a list of tuples like [('user1',), ('user2',)]
     return [r[0] for r in results]
 
 @router.get("/avg-comments")

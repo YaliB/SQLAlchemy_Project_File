@@ -5,7 +5,7 @@ from ..db import get_db # Assuming you have this dependency
 from ..utils.auth_utils import verify_password, create_access_token
 from .. import db_models
 
-router = APIRouter(tags=['Authentication'])
+router = APIRouter()
 
 @router.post("/login")
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):

@@ -4,19 +4,36 @@ from typing import Optional, List
 
 # --- User Schemas ---
 class UserBase(BaseModel):
-    name: str
     username: str
     email: EmailStr
 
 class UserCreate(UserBase):
     password: str
+    display_name: Optional[str] = None # Optional name during registration
 
 class UserResponse(UserBase):
     id: int
     created_at: datetime
+    profile: Optional[UserProfileResponse] = None # Added relationship representation
 
     class Config:
         from_attributes = True # Allows Pydantic to maintain compatibility with ORM objects
+
+# --- User Profile Schemas ---
+class UserProfileBase(BaseModel):
+    display_name: Optional[str] = None
+    bio: Optional[str] = None
+    profile_picture_url: Optional[str] = None
+
+class UserProfileUpdate(UserProfileBase):
+    pass # Used for PATCH/PUT requests
+
+class UserProfileResponse(UserProfileBase):
+    id: int
+    user_id: int
+
+    class Config:
+        from_attributes = True
 
 # --- Post Schemas ---
 class PostBase(BaseModel):
